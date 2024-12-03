@@ -24,14 +24,27 @@
 microtcp_sock_t
 microtcp_socket (int domain, int type, int protocol)
 {
-  /* Your code here */
+  microtcp_sock_t new_socket; 
+  new_socket.sd = socket(domain, type, protocol); /*creates new socket*/
+
+  if(new_socket.sd == -1){ /*descriptor value, if new_socket.sd==-1 socket() failed*/
+    perror("SOCKET COULD NOT BE OPENED");
+    return new_socket;
+    exit(EXIT_FAILURE);
+
+  }
+  /*isos na xreiazetai na arxikopoihseis ta pedia tou microtcp_sock_t struct, des microtcp.h arxeio */
 }
 
 int
 microtcp_bind (microtcp_sock_t *socket, const struct sockaddr *address,
                socklen_t address_len)
 {
-  /* Your code here */
+  if(bind(socket->sd, address, address_len) == -1){
+    perror("BINDING FAIL");
+    return -1;
+  }
+  return 0;
 }
 
 int
